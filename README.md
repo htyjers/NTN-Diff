@@ -54,6 +54,7 @@ Python3 test.py
 
 - Ablation Studies
 ![](image/image5.png)
+![](image/image7.png)
 
 #
 ## Citation
