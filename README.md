@@ -18,11 +18,40 @@ Text-guided image inpainting aims at reconstructing the masked regions as per te
 
 In this paper, we propose a null-text-null frequency-aware diffusion models, dubbed **NTN-Diff**, for text-guided image inpainting, by decomposing the semantics consistency across masked and unmasked regions into the consistencies as per each frequency band, while preserving the unmasked regions, to circumvent two challenges in a row. Based on the diffusion process, we further divide the denoising process into early (high-level noise) and late (low-level noise) stages, where the mid-and-low frequency bands are disentangled during the denoising process. As observed that, the stable mid-frequency band is progressively denoised to be semantically aligned during text-guided denoising process, which, meanwhile, serves as the guidance to the null-text denoising process to denoise low-frequency band for the masked regions, followed by a subsequent text-guided denoising process at late stage, to achieve the semantics consistency for mid-and-low frequency bands across masked and unmasked regions, while preserve the unmasked regions. Extensive experiments validate the superiority of NTN-Diff over the state-of-the-art diffusion models to text-guided diffusion models. 
 
-- Illustration of the proposed NTN-Diff pipeline
-![](image/image1.png)
+- Early Stage for Null-Text-Null Frequency-Aware Diffusion Models: 
 
-- Illustration of (a) denoised low-frequency band layer and (b) mid-frequency band layer
+   - Null-Text Low-Frequency Aware Denoising Process:
+  
+   $$
+   \hat{z}^{un}_{t} = z^{gt}_{T-t} \odot m_{z} + z^{un}_{t} \odot (1 - m_{z}),
+   $$
+   
+   - Text-Guided Denoising Process
+   
+   $$
+   \tilde{z}_{t}^{text} = \text{IDCT}\left(\text{DCT}(z_{t}^{un}) \odot m_{{low}} + \text{DCT}(z_{t}^{text}) \odot (1 - m_{{low}})\right),
+   $$
+   
+   - Null-Text Mid-Frequency Aware Denoising Process
+   
+   $$
+   \tilde{z}^{mid}_{t} = \text{IDCT}\left(\text{DCT}(\tilde{z}_{t}^{text}) \odot m_{\text{mid}} + \text{DCT}({z}^{mid}_{t}) \odot (1 - m_{\text{mid}})\right),
+   $$
+
+- Late Stage of Text-Guided Denoising Process
+
+$$
+\hat{z}^{mid}_{t} = z^{gt}_{T-t} \odot m_{z} + z^{mid}_{t} \odot (1 - m_{z}),
+$$
+
+
+![](image/image1.png)
+<p align="center">Figure 1. Illustration of the proposed NTN-Diff pipeline.</p>
+
 ![](image/image1s.png)
+<p align="center">Figure 2. Illustration of (a) denoised low-frequency band layer and (b) mid-frequency band layer.</p>
+
+
 
 #
 ## Inference
@@ -40,38 +69,6 @@ Python3 test.py
 4. Inpainted Image: 
 [Baidu](https://pan.baidu.com/s/1VG7yR5JD_gbA29rWHzxh9A?pwd=yyve)
 
-5. Algorithm: NTN-Diff
-   
-> ---
-> **Input**: masked image $I$, binary mask $M$, text prompt $C$, null-text prompt $C_{∅}$  
-> **Output**: inpainted image $I'$
->
-> ---
-> #### **I. Diffusion Process for Unmasked Regions**
-> 01: Extract the initial latent feature of the unmasked region $z_{0}^{gt} = E(I)$.  
-> 02: **for** $t = 0$ to $T_{inv} - 1$ **do**  
-> 03:  Compute $z_{t+1}^{gt}$ from $z_{t}^{gt}$;  
-> 04: **end for** {DDIM inversion}
->
-> ---
-> #### **II. Early Stage**
-> 05: Initialize $z_{T}^{un}$, $z_{T}^{text}$, $z_{T}^{mid} \sim N(0,1)$.  
-> 06: **for** $t = T$ to $\lambda T + 1$ **do**  
-> 07:  Substitute the **unmasked regions** of $z_{t}^{un}$ with the corresponding counterpart of $z_{t}^{gt}$ via **Eq.3**;  
-> 08:  Compute $z_{t-1}^{un}$ from $z_{t}^{un}$, conditioned on $C_{∅}$ via **Eq.4**;  
-> 09:  Substitute **low-frequency band** of $z_{t}^{text}$ with the corresponding counterpart of $z_{t}^{un}$ via **Eq.5–7**;  
-> 10:  Compute $z_{t-1}^{text}$ from $z_{t}^{text}$, conditioned on $C$;  
-> 11:  Substitute **mid-frequency band** of $z_{t}^{mid}$ with the corresponding counterpart of $z_{t}^{text}$ via **Eq.8–10**;  
-> 12:  Compute $z_{t-1}^{mid}$ from $z_{t}^{mid}$, conditioned on $C_{∅}$;  
-> 13: **end for**
->
-> ---
-> #### **III. Late Stage**
-> 14: **for** $t = \lambda T$ to $1$ **do**  
-> 15:  Substitute **unmasked regions** of $z_{t}^{mid}$ with the corresponding counterpart of $z_{t}^{gt}$ via **Eq.11**;  
-> 16:  Compute $z_{t-1}^{mid}$ from $z_{t}^{mid}$, conditioned on $C$;  
-> 17: **end for**  
-> 18: Output the final inpainted image $I' = D(z_{0}^{mid})$. 
 
 #
 ## Example Results
