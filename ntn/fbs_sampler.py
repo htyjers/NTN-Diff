@@ -2,14 +2,9 @@ import numpy
 import torch
 import numpy as np
 from tqdm import tqdm
-from ntn.dct_util import dct_2d, idct_2d, low_pass, high_pass,low_pass_and_shuffle
+from ntn.dct_util import dct_2d, idct_2d, low_pass, high_pass
 from ntn.ddim_sampler import DDIM_Sampler
 
-import torch.fft
-import torch
-import torch.nn.functional as F
-import torch
-from scipy.ndimage import binary_dilation
 class FBS_Sampler(DDIM_Sampler):
 
     def __init__(self, model, schedule="linear", **kwargs):
@@ -87,6 +82,7 @@ class FBS_Sampler(DDIM_Sampler):
 
             if callback: callback(i)
         return ref_latent1
+
 
 
 
