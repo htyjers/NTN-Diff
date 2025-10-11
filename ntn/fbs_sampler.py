@@ -15,53 +15,6 @@ class FBS_Sampler(DDIM_Sampler):
     def __init__(self, model, schedule="linear", **kwargs):
         super(FBS_Sampler, self).__init__(model, schedule, **kwargs)
 
-    import numpy as np
-    import torch
-    from scipy.ndimage import binary_dilation
-
-    def shrink_and_weight(self, mask, iterations, win, initial_weight=1.0):
-        """
-        从未遮挡区域向遮挡区域逐步收缩，依次赋予递减权重。
-
-        :param mask: 输入二值化掩码，形状为 (1, 1, H, W)，未遮挡区域为 1，遮挡区域为 0，类型为 tensor
-        :param iterations: 收缩次数，决定迭代次数
-        :param initial_weight: 初始权重值，默认为 1.0
-        :return: 加权掩码，形状与输入相同
-        """
-        # 将 mask 转为 numpy 数组以使用 binary_dilation
-        mask_np = mask.cpu().numpy().astype(np.float32)
-
-        # 初始化权重掩码
-        weighted_mask_np = np.zeros_like(mask_np, dtype=np.float32)
-        weighted_mask_np[mask_np == 1] = 1.0  # 未遮挡区域赋初始权重
-
-        # 当前权重值
-        current_weight = initial_weight
-
-        # 初始化膨胀区域（未遮挡区域）
-        current_region = mask_np.copy()
-
-        for _ in range(iterations):
-            # 计算下一次膨胀区域
-            next_region = binary_dilation(current_region, structure=np.ones((1, 1, win, win))).astype(np.float32)
-
-            # 找到新覆盖的遮挡区域
-            new_region = (next_region - current_region) * (mask_np == 0)
-
-            # 更新权重掩码，给新覆盖的区域赋值当前权重的减半值
-            current_weight /= 2.0
-            weighted_mask_np += new_region * current_weight
-
-            # 更新当前区域
-            current_region = next_region
-
-            # 如果当前区域没有变化，则提前退出
-            if not np.any(new_region):
-                break
-
-        weighted_mask1 = torch.tensor(weighted_mask_np, dtype=torch.float32, device=mask.device)
-        return weighted_mask1
-
     @torch.no_grad()
     def decode(self, ref_latent, cond, t_dec, unconditional_guidance_scale,
                          unconditional_conditioning, mask, unmask, conds, conds1, use_original_steps=False, callback=None,
@@ -134,5 +87,6 @@ class FBS_Sampler(DDIM_Sampler):
 
             if callback: callback(i)
         return ref_latent1
+
 
 
