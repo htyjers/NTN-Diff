@@ -49,7 +49,7 @@ class FBS_Sampler(DDIM_Sampler):
             if step >= end_step:
 
                 ref_latent = intermediates[intermediate_steps.index(ts + 1)] * (1 - mask) + ref_latent * mask
-                ref_latent, ref_latent0, _ = self.p_sample_ddim(ref_latent, unconditional_conditioning, ts,
+                ref_latent, _, _ = self.p_sample_ddim(ref_latent, unconditional_conditioning, ts,
                                                       mask=mask_inpainting, index=index,
                                                       use_original_steps=use_original_steps,
                                                       unconditional_guidance_scale=1.0,
@@ -59,7 +59,7 @@ class FBS_Sampler(DDIM_Sampler):
                 merged_dct = low_pass(ref_latent_dct, threshold) \
                              + high_pass(x_dec_dct, threshold + 1)
                 x_dec = idct_2d(merged_dct, norm='ortho')
-                x_dec, x_dec0, _ = self.p_sample_ddim(x_dec, cond, ts, index=index,
+                x_dec, _, _ = self.p_sample_ddim(x_dec, cond, ts, index=index,
                                                  use_original_steps=use_original_steps,
                                                  unconditional_guidance_scale=7.5,
                                                  unconditional_conditioning=conds)
@@ -71,7 +71,7 @@ class FBS_Sampler(DDIM_Sampler):
                              high_pass(ref_latent_dct1, threshold2 + 1)
                 ref_latent1 = idct_2d(merged_dct, norm='ortho')
 
-                ref_latent1, ref_latent10, _ = self.p_sample_ddim(ref_latent1, conds1, ts, index=index,
+                ref_latent1, _, _ = self.p_sample_ddim(ref_latent1, conds1, ts, index=index,
                                                        use_original_steps=use_original_steps,
                                                        unconditional_guidance_scale=1.0,
                                                        unconditional_conditioning=None)
@@ -80,13 +80,14 @@ class FBS_Sampler(DDIM_Sampler):
 
             else:
                 ref_latent1 = intermediates[intermediate_steps.index(ts + 1)] * (1 - mask) + ref_latent1 * mask
-                ref_latent1, ref_latent10, _ = self.p_sample_ddim(ref_latent1, cond, ts, index=index,
+                ref_latent1, _, _ = self.p_sample_ddim(ref_latent1, cond, ts, index=index,
                                                        use_original_steps=use_original_steps,
                                                        unconditional_guidance_scale=5.5,
                                                        unconditional_conditioning=conds)
 
             if callback: callback(i)
         return ref_latent1
+
 
 
 
