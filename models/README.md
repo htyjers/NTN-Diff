@@ -1,0 +1,1 @@
+Download the Stable Diffusion v1.5 model checkpoint **file v1-5-pruned-emaonly.ckpt** and put it right here. It can be downloaded from [this link](https://huggingface.co/runwayml/stable-diffusion-v1-5/blob/main/v1-5-pruned-emaonly.ckpt).
