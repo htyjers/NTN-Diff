@@ -83,10 +83,10 @@ class FBS_Sampler(DDIM_Sampler):
 
 
         mask_inpainting = mask
-        threshold = 80 + 25 * zero_ratio
-        threshold1 = 5 - 5 * zero_ratio
+        threshold = 90 + 20 * zero_ratio
+        threshold1 = 15 - 5 * zero_ratio
         threshold2 = 80 + 20 * zero_ratio
-        unconditional_guidance_scale = 7.5
+
 
         intermediate_steps = unmask['intermediate_steps']
         intermediates = unmask['intermediates']
@@ -95,7 +95,7 @@ class FBS_Sampler(DDIM_Sampler):
             ts = torch.full((ref_latent.shape[0],), step, device=ref_latent.device, dtype=torch.long)
             if step >= end_step:
 
-                ref_latent = intermediates[intermediate_steps.index(ts+1)] * (1 - mask) + ref_latent * mask
+                ref_latent = intermediates[intermediate_steps.index(ts + 1)] * (1 - mask) + ref_latent * mask
                 ref_latent, ref_latent0, _ = self.p_sample_ddim(ref_latent, unconditional_conditioning, ts,
                                                       mask=mask_inpainting, index=index,
                                                       use_original_steps=use_original_steps,
@@ -108,7 +108,7 @@ class FBS_Sampler(DDIM_Sampler):
                 x_dec = idct_2d(merged_dct, norm='ortho')
                 x_dec, x_dec0, _ = self.p_sample_ddim(x_dec, cond, ts, index=index,
                                                  use_original_steps=use_original_steps,
-                                                 unconditional_guidance_scale=unconditional_guidance_scale,
+                                                 unconditional_guidance_scale=7.5,
                                                  unconditional_conditioning=conds)
 
                 x_dec_dct = dct_2d(x_dec, norm='ortho')
@@ -129,9 +129,10 @@ class FBS_Sampler(DDIM_Sampler):
                 ref_latent1 = intermediates[intermediate_steps.index(ts + 1)] * (1 - mask) + ref_latent1 * mask
                 ref_latent1, ref_latent10, _ = self.p_sample_ddim(ref_latent1, cond, ts, index=index,
                                                        use_original_steps=use_original_steps,
-                                                       unconditional_guidance_scale=unconditional_guidance_scale,
+                                                       unconditional_guidance_scale=5.5,
                                                        unconditional_conditioning=conds)
 
             if callback: callback(i)
         return ref_latent1
+
 
