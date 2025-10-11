@@ -49,6 +49,7 @@ class FBS_Sampler(DDIM_Sampler):
                                                       use_original_steps=use_original_steps,
                                                       unconditional_guidance_scale=1.0,
                                                       unconditional_conditioning=None)
+                
                 ref_latent_dct = dct_2d(ref_latent, norm='ortho')
                 x_dec_dct = dct_2d(x_dec, norm='ortho')
                 merged_dct = low_pass(ref_latent_dct, threshold) \
@@ -77,11 +78,12 @@ class FBS_Sampler(DDIM_Sampler):
                 ref_latent1 = intermediates[intermediate_steps.index(ts + 1)] * (1 - mask) + ref_latent1 * mask
                 ref_latent1, _, _ = self.p_sample_ddim(ref_latent1, cond, ts, index=index,
                                                        use_original_steps=use_original_steps,
-                                                       unconditional_guidance_scale=5.5,
+                                                       unconditional_guidance_scale=7.5,
                                                        unconditional_conditioning=conds)
 
             if callback: callback(i)
         return ref_latent1
+
 
 
 
