@@ -31,9 +31,9 @@ class FBS_Sampler(DDIM_Sampler):
 
 
         mask_inpainting = mask
-        threshold = 90 + 20 * zero_ratio
-        threshold1 = 15 - 5 * zero_ratio
-        threshold2 = 80 + 20 * zero_ratio
+        threshold = 70 + 20 * zero_ratio
+        threshold1 = 25 - 15 * zero_ratio
+        threshold2 = 60 + 20 * zero_ratio
 
 
         intermediate_steps = unmask['intermediate_steps']
@@ -83,6 +83,7 @@ class FBS_Sampler(DDIM_Sampler):
 
             if callback: callback(i)
         return ref_latent1
+
 
 
 
