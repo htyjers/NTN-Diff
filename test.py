@@ -62,10 +62,6 @@ def preprocess_mask(maskt, latent):
     mask_resized = mask_resized.to(device)
     return mask_resized
 
-#
-# model = create_model('./models/model_ldm_v15.yaml').cuda()
-# model.load_state_dict(load_state_dict('/root/autodl-tmp/v1-5-pruned-emaonly.ckpt', location='cuda'), strict=False)
-
 
 from safetensors.torch import load_file
 model = create_model('./models/model_ldm_v15.yaml').cuda()
@@ -98,7 +94,7 @@ target_prompt = caption
 seed = -1
 
 if seed == -1:
-    seed = random.randint(1000000, 10000000)
+    seed = random.randint(10000000000, 100000000000)
 seed_everything(seed)
 
 mask = np.array(Image.open(mask_path).resize((H, W)).convert('L'))
@@ -142,4 +138,5 @@ composed_image = (composed_image + 1) / 2
 vutils.save_image(composed_image, composed_image_path, normalize=False)
 
 original_image = (img_tensor + 1) / 2
+
 vutils.save_image(original_image, img_path, normalize=False)
