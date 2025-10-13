@@ -5,7 +5,3 @@ torchmetrics==0.6
 transformers==4.19.2
 open-clip-torch==2.7.0
 pillow
-
-ps aux
-pip install torchmetrics==0.6
-pip install --upgrade torchmetrics
