@@ -78,8 +78,8 @@ Python3 test.py
 
 
 - Quantitative results.
-![](image/image3.png)
-![](image/image4.png)
+![](image/table1.png)
+![](image/table2.png)
 
 - Ablation Studies
 ![](image/image7.png)
