@@ -35,20 +35,20 @@ In this paper, we propose a null-text-null frequency-aware diffusion models, dub
    - Null-Text Mid-Frequency Aware Denoising Process
    
    $$
-   \tilde{z}^{mid}_{t} = \text{IDCT}\left(\text{DCT}(\tilde{z}_{t}^{text}) \odot m_{\text{mid}} + \text{DCT}({z}^{mid}_{t}) \odot (1 - m_{\text{mid}})\right),
+   \tilde{z}^{in}_{t} = \text{IDCT}\left(\text{DCT}(\tilde{z}_{t}^{text}) \odot m_{\text{mid}} + \text{DCT}({z}^{in}_{t}) \odot (1 - m_{\text{mid}})\right),
    $$
 
 - Late Stage of Text-Guided Denoising Process
 
 $$
-\hat{z}^{mid}_{t} = z^{gt}_{T-t} \odot m_{z} + z^{mid}_{t} \odot (1 - m_{z}),
+\hat{z}^{in}_{t} = z^{gt}_{T-t} \odot m_{z} + z^{in}_{t} \odot (1 - m_{z}),
 $$
 
 
-![](image/image1ss.png)
+![](image/model.png)
 <p align="center">Figure 1. Illustration of the proposed NTN-Diff pipeline.</p>
 
-![](image/image1s.png)
+![](image/module.png)
 <p align="center">Figure 2. Illustration of (a) denoised low-frequency band layer and (b) mid-frequency band layer.</p>
 
 
