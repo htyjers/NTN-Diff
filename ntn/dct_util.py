@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from PIL import Image
 
-from FBSDiff.tools import create_model, load_state_dict
+from ntn.tools import create_model, load_state_dict
 
 
 def img_resize(img_folder, resize_h, resize_w):
