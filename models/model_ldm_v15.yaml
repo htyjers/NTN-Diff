@@ -1,5 +1,5 @@
 model:
-  target: FBSDiff.model.LDMWrapper
+  target: ntn.model.LDMWrapper
   params:
     linear_start: 0.00085
     linear_end: 0.0120
@@ -17,7 +17,7 @@ model:
     use_ema: False
 
     unet_config:
-      target: FBSDiff.model.UnetModelWrapper
+      target: ntn.model.UnetModelWrapper
       params:
         image_size: 32 # unused
         in_channels: 4
