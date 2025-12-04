@@ -57,7 +57,6 @@ def preprocess_mask(maskt, latent):
     target_size = latent.shape[-2:]  # (H, W)
 
     # 下采样 mask 到 target_size
-    # mask_resized = F.interpolate(maskt, size=target_size, mode='nearest')
     mask_resized = F.interpolate(maskt, size=target_size, mode='bilinear', align_corners=True)
     mask_resized = mask_resized.to(device)
     return mask_resized
@@ -140,4 +139,5 @@ vutils.save_image(composed_image, composed_image_path, normalize=False)
 original_image = (img_tensor + 1) / 2
 
 vutils.save_image(original_image, img_path, normalize=False)
+
 
