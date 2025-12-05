@@ -5,7 +5,7 @@ from tqdm import tqdm
 from ntn.dct_util import dct_2d, idct_2d, low_pass, high_pass
 from ntn.ddim_sampler import DDIM_Sampler
 
-class FBS_Sampler(DDIM_Sampler):
+class Ntn_Sampler(DDIM_Sampler):
 
     def __init__(self, model, schedule="linear", **kwargs):
         super(FBS_Sampler, self).__init__(model, schedule, **kwargs)
@@ -32,8 +32,8 @@ class FBS_Sampler(DDIM_Sampler):
 
         mask_inpainting = mask
         threshold = 70 + 20 * zero_ratio
-        threshold1 = 25 - 15 * zero_ratio
-        threshold2 = 60 + 20 * zero_ratio
+        threshold1 = 15 - 15 * zero_ratio
+        threshold2 = 100 + 20 * zero_ratio
 
 
         intermediate_steps = unmask['intermediate_steps']
@@ -83,6 +83,7 @@ class FBS_Sampler(DDIM_Sampler):
 
             if callback: callback(i)
         return ref_latent1
+
 
 
 
