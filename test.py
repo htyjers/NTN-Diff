@@ -6,7 +6,7 @@ from PIL import Image
 import os
 from pytorch_lightning import seed_everything
 from ntn.tools import create_model, load_state_dict
-from ntn.fbs_sampler import Ntn_Sampler
+from ntn.ntn_sampler import Ntn_Sampler
 import torchvision.utils as vutils
 import cv2
 import numpy as np
@@ -139,6 +139,7 @@ vutils.save_image(composed_image, composed_image_path, normalize=False)
 original_image = (img_tensor + 1) / 2
 
 vutils.save_image(original_image, img_path, normalize=False)
+
 
 
 
