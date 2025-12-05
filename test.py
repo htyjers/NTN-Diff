@@ -76,7 +76,7 @@ encode_steps = 1000
 decode_steps = 100
 
 # set the value of lambda (0~1), the larger the lambda_end, the shorter the calibration phase is.
-lambda_end = 0.6
+lambda_end = 0.5
 
 # the end step of the calibration phase
 end_step = encode_steps * lambda_end
@@ -139,6 +139,7 @@ vutils.save_image(composed_image, composed_image_path, normalize=False)
 original_image = (img_tensor + 1) / 2
 
 vutils.save_image(original_image, img_path, normalize=False)
+
 
 
 
