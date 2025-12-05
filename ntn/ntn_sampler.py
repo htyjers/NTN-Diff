@@ -32,8 +32,8 @@ class Ntn_Sampler(DDIM_Sampler):
 
         mask_inpainting = mask
         threshold = 70 + 20 * zero_ratio
-        threshold1 = 20 - 15 * zero_ratio
-        threshold2 = 100 + 20 * zero_ratio
+        threshold1 = 15 - 15 * zero_ratio
+        threshold2 = 80 + 20 * zero_ratio
 
 
         intermediate_steps = unmask['intermediate_steps']
@@ -81,6 +81,7 @@ class Ntn_Sampler(DDIM_Sampler):
 
             if callback: callback(i)
         return ref_latent1
+
 
 
 
