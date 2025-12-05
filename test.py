@@ -93,7 +93,7 @@ target_prompt = caption
 seed = -1
 
 if seed == -1:
-    seed = random.randint(0, 100000000000)
+    seed = random.randint(100000000, 100000000000)
 seed_everything(seed)
 
 mask = np.array(Image.open(mask_path).resize((H, W)).convert('L'))
@@ -139,6 +139,7 @@ vutils.save_image(composed_image, composed_image_path, normalize=False)
 original_image = (img_tensor + 1) / 2
 
 vutils.save_image(original_image, img_path, normalize=False)
+
 
 
 
