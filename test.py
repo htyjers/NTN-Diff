@@ -67,7 +67,7 @@ model = create_model('./models/model_ldm_v15.yaml').cuda()
 state_dict = load_file('./models/Realistic_Vision_V6.0_NV_B1.safetensors')
 model.load_state_dict(state_dict, strict=False)
 
-sampler = FBS_Sampler(model)
+sampler = Ntn_Sampler(model)
 
 
 encode_steps = 1000
@@ -139,6 +139,7 @@ vutils.save_image(composed_image, composed_image_path, normalize=False)
 original_image = (img_tensor + 1) / 2
 
 vutils.save_image(original_image, img_path, normalize=False)
+
 
 
 
