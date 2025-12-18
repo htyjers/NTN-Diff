@@ -89,8 +89,7 @@ Python3 test.py
 If any part of our paper and repository is helpful to your work, please generously cite with:
 
 ```
-@inproceedings{
-liu2025one,
+@inproceedings{liu2025one,
 title={One Stone with Two Birds: A Null-Text-Null Frequency-Aware Diffusion Models for Text-Guided Image Inpainting},
 author={Haipeng Liu and Yang Wang and Meng Wang},
 booktitle={The Thirty-ninth Annual Conference on Neural Information Processing Systems},
