@@ -66,9 +66,6 @@ $$
 Python3 test.py
 ```
 
-4. Inpainted Image: 
-[Baidu](https://pan.baidu.com/s/1VG7yR5JD_gbA29rWHzxh9A?pwd=yyve)
-
 
 #
 ## Example Results
