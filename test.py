@@ -35,28 +35,14 @@ import torch.nn.functional as F
 
 
 def preprocess_mask(maskt, latent):
-    """
-    下采样 mask 并移动到 ref_latent 所在设备。
-
-    参数:
-    - mask: 原始 mask，可能是 numpy 数组
-    - ref_latent: 参考 latent，确定目标大小和设备
-
-    返回:
-    - 下采样并转移到正确设备的 mask
-    """
-    # 如果 mask 是 NumPy 数组，转换为 PyTorch 张量
     if isinstance(maskt, np.ndarray):
         maskt = torch.from_numpy(maskt)
 
-    # 确保 mask 是浮点数类型（插值需要）
     maskt = maskt.float()
 
-    # 获取 ref_latent 的设备和目标大小
     device = latent.device
     target_size = latent.shape[-2:]  # (H, W)
 
-    # 下采样 mask 到 target_size
     mask_resized = F.interpolate(maskt, size=target_size, mode='bilinear', align_corners=True)
     mask_resized = mask_resized.to(device)
     return mask_resized
