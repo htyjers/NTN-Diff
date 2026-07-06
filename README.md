@@ -65,7 +65,8 @@ $$
 ```
 Python3 test.py
 ```
-
+* We adopt a random seed to generate the noise.
+https://github.com/htyjers/NTN-Diff/blob/0d493a51b6c28c539b9ec8b9dd680b4428c40f69/test.py#L95-L97
 
 #
 ## Example Results
