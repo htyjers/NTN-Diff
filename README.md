@@ -52,7 +52,6 @@ $$
 <p align="center">Figure 2. Illustration of (a) denoised low-frequency band layer and (b) mid-frequency band layer.</p>
 
 
-
 #
 ## Inference
 1. Dataset Preparation:
